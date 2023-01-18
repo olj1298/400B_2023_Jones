@@ -1,2 +1,3 @@
 # 400B_2023_Jones
-Astronomy CourseWork
+Astronomy Course Work for ASTR400B
+This will be where I am storing all homework and assignments
