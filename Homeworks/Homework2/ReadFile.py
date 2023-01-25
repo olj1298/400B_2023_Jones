@@ -2,7 +2,8 @@ import numpy as np
 import astropy.units as u
 #oliviajones01.26.2023
 
-filename = "C:/Users/orang/Downloads/400b/MW_000.txt" #directory for file to read
+#directory for file to read
+filename = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework2/MW_000.txt" 
 
 def Read(filename): 
     """Function to open, read, print, and close file
