@@ -110,7 +110,22 @@ print(f'Mass inside 260 kpc is {MIso260:.2e}')
 #and assuming the Milky Way is well modeled by a Hernquist Sphere with a scale radius of $a$= 30 kpc, what is the min. mass of the Milky Way (in units of M$_\odot$) ?  
 #How does this compare to estimates of the mass assuming the Isothermal Sphere model at 260 kpc (from your answer above)
 
-Vtot = 196 *u.km/u.s
+def MassFromVesc(vesc,r,a):
+    """Compute mass of Leo I given scale radius, velocity, distance. Assuming Herquist Halo
+    Inputs:
+        :vesc(astropy quantity): speed of Leo I
+        :r(astropy quantity): distance from Galactic Center
+        :a(astropy quantity): Scale radius of Herquist halo
+    Returns:
+        ::Mass of Leo I"""
+    vescKpcGyr = vesc.to(u.kpc/u.Gyr) #converting velocity to kpc/Gyr
+    M= vescKpcGyr**2/2/Grav*(r+a) #required mass
+    return M
 
-def Leosprint():
-    return
+VLeoI = 196 *u.km/u.s #speed of Leo I from Sohn+2013 ApJ768
+a = 30 * u.kpc #Scale radius for Herquist halo
+r = 260 *u.kpc #Galactocentric distance of LeoI
+MLeoI = MassFromVesc(VLeoI,r,a)
+print(MLeoI)
+print(f'Mass of Leo I is {MLeoI:.2e}')
+print(f'Ratio of MIso260 to MLeoI {MIso260/MLeoI}')
