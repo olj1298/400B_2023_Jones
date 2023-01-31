@@ -2,9 +2,6 @@ import numpy as np
 import astropy.units as u
 #oliviajones01.26.2023
 
-#directory for file to read
-filename = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework2/MW_000.txt" 
-
 def Read(filename): 
     """Function to open, read, print, and close file
     Inputs:
@@ -25,5 +22,3 @@ def Read(filename):
     #names=True creates array to store data labels
     #print(data['type'][1])
     return time,total,data #give time, total, data values when asked
-
-Read(filename)
