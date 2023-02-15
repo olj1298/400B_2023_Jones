@@ -22,8 +22,9 @@ class MassProfile:
         #remove all but the last 3 digits
         ilbl = ilbl[-3:]
         self.filename='%s_'%(galaxy)+ilbl+'.txt'
+        print(self.filename)
         #read data in the given file using Read
-        self.time, self.total, self.data = Read(self.filename)                                                                                      
+        self.time, self.total, self.data = Read('./MW_000.txt')                                                                                      
         #store the mass, positions, velocities, galaxy name from file
         self.m = self.data['m'] #data in m column from file. 
         self.x = self.data['x']*u.kpc #data in x column from file.  

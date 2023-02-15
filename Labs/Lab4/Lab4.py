@@ -23,8 +23,19 @@ import matplotlib
 
 #Filename for data with Isochrone fit for 1 Gyr
 #These files are located in the folder IsochroneData
-filename1="./IsochroneData/Isochrone1.txt"
-
+filename1="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone1.txt"
+filename2="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone2.txt"
+filename3="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone3.txt"
+filename4="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone4.txt"
+filename5="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone5.txt"
+filename6="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone6.txt"
+filename7="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone7.txt"
+filename8="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone8.txt"
+filename9="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone9.txt"
+filename10="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone10.txt"
+filename11="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone11.txt"
+filename12="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone12.txt"
+filename13="C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneData/Isochrone13.txt"
 
 #READ IN DATA
 #"dtype=None" means line is split using white spaces
@@ -34,7 +45,18 @@ filename1="./IsochroneData/Isochrone1.txt"
 
 #Read in data for an isochrone corresponding to 1 Gyr
 data1 = np.genfromtxt(filename1,dtype=None,names=True,skip_header=8)
-
+data2 = np.genfromtxt(filename2,dtype=None,names=True,skip_header=8)
+data3 = np.genfromtxt(filename3,dtype=None,names=True,skip_header=8)
+data4 = np.genfromtxt(filename4,dtype=None,names=True,skip_header=8)
+data5 = np.genfromtxt(filename5,dtype=None,names=True,skip_header=8)
+data6 = np.genfromtxt(filename6,dtype=None,names=True,skip_header=8)
+data7 = np.genfromtxt(filename7,dtype=None,names=True,skip_header=8)
+data8 = np.genfromtxt(filename8,dtype=None,names=True,skip_header=8)
+data9 = np.genfromtxt(filename9,dtype=None,names=True,skip_header=8)
+data10 = np.genfromtxt(filename10,dtype=None,names=True,skip_header=8)
+data11 = np.genfromtxt(filename11,dtype=None,names=True,skip_header=8)
+data12 = np.genfromtxt(filename12,dtype=None,names=True,skip_header=8)
+data13 = np.genfromtxt(filename13,dtype=None,names=True,skip_header=8)
 
 #Plot Isochrones 
 #For Carina
@@ -43,7 +65,21 @@ ax = plt.subplot(111)
 #Plot Isochrones
 #Isochrone for 1 Gyr
 #Plotting Color vs. Difference in Color 
-plt.plot(data1['B']-data1['R'], data1['R'], color='blue', linewidth=5, label='1 Gyr')
+plt.plot(data1['B']-data1['R'], data1['R'], color='red', linewidth=5, label='1 Gyr')
+plt.plot(data2['B']-data2['R'], data2['R'], color='orange', linewidth=5, label='2 Gyr')
+plt.plot(data3['B']-data3['R'], data3['R'], color='yellow', linewidth=5, label='3 Gyr')
+plt.plot(data4['B']-data4['R'], data4['R'], color='green', linewidth=5, label='4 Gyr')
+plt.plot(data5['B']-data5['R'], data5['R'], color='blue', linewidth=5, label='5 Gyr')
+plt.plot(data6['B']-data6['R'], data6['R'], color='cyan', linewidth=5, label='6 Gyr')
+plt.plot(data7['B']-data7['R'], data7['R'], color='purple', linewidth=5, label='7 Gyr')
+plt.plot(data8['B']-data8['R'], data8['R'], color='pink', linewidth=5, label='8 Gyr')
+plt.plot(data9['B']-data9['R'], data9['R'], color='magenta', linewidth=5, label='9 Gyr')
+plt.plot(data10['B']-data10['R'], data10['R'], color='gray', linewidth=5, label='10 Gyr')
+plt.plot(data11['B']-data11['R'], data11['R'], color='black', linewidth=5, label='11 Gyr')
+plt.plot(data12['B']-data12['R'], data12['R'], color='brown', linewidth=5, label='12 Gyr')
+plt.plot(data13['B']-data13['R'], data13['R'], color='olive', linewidth=5, label='13 Gyr')
+
+
 ###EDIT Here, following the same format as the line above 
 #Add axis labels
 plt.xlabel('B-R', fontsize=22)
