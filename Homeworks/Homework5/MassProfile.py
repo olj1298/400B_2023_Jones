@@ -2,7 +2,7 @@
 #import modules
 import numpy as np
 import astropy.units as u
-from astropy.constants import G
+import astropy.constants as const
 from ReadFile import Read #bring in readfile.py
 from CenterOfMass import CenterOfMass #bring in previous class
 import matplotlib.pyplot as plt
@@ -21,10 +21,10 @@ class MassProfile:
         ilbl = '000' + str(snap) #add a string of the filenumber to the value “000”
         #remove all but the last 3 digits
         ilbl = ilbl[-3:]
-        self.filename='%s_'%(galaxy)+ilbl+'.txt'
-        print(self.filename)
+        self.filename = 'C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/' + '%s_'%(galaxy)+ilbl+'.txt'
+        #print(self.filename)
         #read data in the given file using Read
-        self.time, self.total, self.data = Read('./MW_000.txt')                                                                                      
+        self.time, self.total, self.data = Read(self.filename)                                                                                      
         #store the mass, positions, velocities, galaxy name from file
         self.m = self.data['m'] #data in m column from file. 
         self.x = self.data['x']*u.kpc #data in x column from file.  
@@ -43,7 +43,7 @@ class MassProfile:
             Returns:
                 ::mass enclosed(array): units in Msun"""
                 
-        GalCOM = CenterOfMass(self.filename, ptype) #Create a Center of mass object for COM Postion
+        GalCOM = CenterOfMass(self.filename, 2) #Create a Center of mass object for COM Postion
         GalCOMp = GalCOM.COM_P(0.1) #Call COM_P
         indpart = np.where(self.data["type"] == ptype) #For particle type that exists in galaxy
         #define the x, y, and z center of masses
@@ -56,18 +56,16 @@ class MassProfile:
         z_new = self.z[indpart]-z_COM
         m_new = self.m[indpart]
         r_new = np.sqrt(x_new**2 + y_new**2 + z_new**2) #radius of each particle from the center of the galaxy
-        mlist=[] #empty list for mass values
+        menc=np.zeros(np.size(rarray)) #array of zeros for mass values
 
-        for radius in rarray: #for radius in array of radii
-            rindex = np.where(r_new < radius) #get particles inside radius
+        for i in range(np.size(rarray)): #for radius in array of radii
+            rindex = np.where(r_new < rarray[i]) #get particles inside radius
             minr = m_new[rindex] #get mass of particles in radius
-            mlist.append(sum(minr)) #sum mass of all particles in radius
-         
-        massarray = np.array(mlist) #change from list to array
+            menc[i]=np.sum(minr) #sum mass of all particles in radius
         
-        return massarray*u.M_sun*1e10 #add units and magnitude
+        return menc*u.M_sun*1e10 #add units and magnitude
     
-    def MassTotal(self,rarray):
+    def MassEnclosedTotal(self,rarray):
         """Calls MassEnclosed to compute the mass enclosed within the radius array for each
         particle type (bulge, disk and halo).
             Inputs:
@@ -87,7 +85,7 @@ class MassProfile:
         
         return Tmass #units in Msun
     
-    def HerquistMassProfile(self, radius, a, Mhalo):
+    def HernquistMass(self, radius, a, Mhalo):
         """Compute the mass enclosed within a given radius using the theoretical Herquist profile.
                 p(r) = (M*a / 2 pi r) * (1/(r+a)**3) 
                 M(r) = (Mhalo* r**2) / (a+r)**2
@@ -100,10 +98,9 @@ class MassProfile:
                 ::Halo mass in units of Msun"""
 
         M = (Mhalo * radius**2) / (a+radius)**2 #calc mass
-        p = (M * a / (2 * np.pi * radius)) * (1/(radius+a)**3) #hernquist profile
+        #p = (M * a / (2 * np.pi * radius)) * (1/(radius+a)**3) #hernquist profile
         
-        Hmassprint = print(f"Halo Mass is: {np.round(p,2)*u.Msun}")
-        return Hmassprint
+        return M
     
     def CircularVelocity(self,ptype,rarray):
         """The circular speed is computed using the Mass enclosed at each radius, assuming spherical symmetry.
@@ -115,12 +112,11 @@ class MassProfile:
             Returns:
                 ::array of circular speeds in units of km/s, rounded to two decimal places."""
         
-        G = G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
+        G = const.G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
         marray = self.MassEnclosed(ptype,rarray) #Call mass at radius for particles
         vel = np.sqrt(G*marray/rarray) #Orbital velocity equation
-        
-        Circprint = print(f"velocity is: {np.round(vel,2)*u.km/u.s}") #Round and get in units for vel.
-        return Circprint
+    
+        return vel
 
     def CircularVelocityTotal(self,rarray):
         """The total circular velocity is NOT just the circular velocity of each individual galaxy component summed together.
@@ -133,25 +129,23 @@ class MassProfile:
                 array."""
 
         Tmarray = self.MassEnclosedTotal(rarray) #Call total mass of particles per radius
-        G = G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
+        G = const.G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
         Tvcirc = np.sqrt(G*Tmarray/rarray) #Orbital velocity equation
         
-        Cvelprint = print(f"total velocity: {np.round(Tvcirc,2)*u.km/u.s}") #round and put in units for vel.
-        return Cvelprint
+        return Tvcirc
     
-    def HerquistVCirc(self,radius,a,Mhalo):
+    def HernquistVCirc(self,radius,a,Mhalo):
         """Computes the circular speed using the Hernquist mass profile.
             Inputs:
                 :self(function within class):
             Returns:
                 ::circular speed in units of km/s, rounded to two decimal places."""
-          
-        G = G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
+        
+        G = const.G.to(u.kpc*u.km**2/u.s**2/u.Msun) #Grav const. conversion
         Hernquist = self.HernquistMass(radius,a,Mhalo) #Call Herquist profile with mass and radius
         VCirc = np.sqrt(G*Hernquist*u.Msun/(radius)) #Orbital velocity equation with Herquist profile
-        
-        HCircprint = print(f"Herquist VCirc: {np.round(VCirc,2)*u.km/u.s}") #round and put in units for vel.                 
-        return HCircprint
+                    
+        return VCirc
     
 if __name__ == '__main__' :
     #Section 8
@@ -185,13 +179,9 @@ if __name__ == '__main__' :
     MWD = MW.MassEnclosed(2,r) #mass profile of MW Disk
     MWB = MW.MassEnclosed(3,r) #mass profile MW Bulge
     MWT = MW.MassEnclosedTotal(r) #MW Mass Total
-    MassMWH = max(MWH)/u.Msun #Mass of MW halo
-    Hern = [] #empty array for Herquist profile masses
-    scaleMW = 18 #scale factor of MW
-    
-    for radius in r: #find the mass according to hernquist profile at each radii
-        MWHern = MW.HernquistMass(radius/u.kpc,scaleMW,MassMWH)
-        Hern.append(MWHern)
+    MassMWH = 1.975e12*u.Msun #Mass of MW halo
+    scaleMW = 62 #scale factor of MW
+    Hern = MW.HernquistMass(r/u.kpc,scaleMW,MassMWH) # array for Herquist profile masses
     
     #plot MW mass profiles on log graphs
     fig,ax = plt.subplots(figsize = (10,10))
@@ -201,8 +191,9 @@ if __name__ == '__main__' :
     ax.semilogy(r,MWT,label = 'Total Profile')
     ax.semilogy(r,Hern,linestyle = 'dashed',label = 'Hernquist Profile')
     legend = ax.legend() #create legend
-    ax.set(title = 'MW Mass Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
-    print(f"The best scale length for the MW is: {scaleMW*u.kpc}")
+    ax.set(title = 'MW Mass Profiles - Scale fit 62 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
+    #print(f"The best fit scale length for the MW is: {scaleMW*u.kpc}")
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/MWMassProfile.png')
     
     #8. Repeat for M33 and M31.
     
@@ -212,13 +203,9 @@ if __name__ == '__main__' :
     M31D = M31.MassEnclosed(2,r) #mass profile of M31 Disk
     M31B = M31.MassEnclosed(3,r) #mass profile of M31 Bulge
     M31T = MW.MassEnclosedTotal(r) #M31 mass total
-    MassM31H = max(M31H)/u.Msun #mass of M31 halo
-    Hern=[] #empty array for Herquist profile masses
-    scaleM31=15 #scale factor of M31
-    
-    for radius in r: #mass according to hernquist profile at each radii
-        M31Hern=M31.HernquistMass(radius/u.kpc,scaleM31,MassM31H)
-        Hern.append(M31Hern)
+    MassM31H = 1.921e12*u.Msun #mass of M31 halo
+    scaleM31 = 62.5 #scale factor of M31
+    Hern=M31.HernquistMass(r/u.kpc,scaleM31,MassM31H) # array for Herquist profile masses
     
     #plot M31 mass profiles on log graphs
     fig,ax=plt.subplots(figsize = (10,10))
@@ -228,21 +215,18 @@ if __name__ == '__main__' :
     ax.semilogy(r,M31T,label = 'Total Profile')
     ax.semilogy(r,Hern,linestyle = 'dashed',label = 'Hernquist Profile')
     legend=ax.legend() #create legend
-    ax.set(title = 'M31 Mass Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
-    print(f"The best scale length for M31 is: {scaleM31*u.kpc}")
+    ax.set(title = 'M31 Mass Profiles - Scale fit of 62.5 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
+    #print(f"The best fit scale length for M31 is: {scaleM31*u.kpc}")
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/M31MassProfile.png')
     
     """M33"""
     M33 = MassProfile('M33',0) #COM object for M33
     M33H = M33.MassEnclosed(1,r) #mass profile of M33 Halo
     M33D = M33.MassEnclosed(2,r) #mass profile of M33 Disk
     M33T = MW.MassEnclosedTotal(r) #M33 mass total
-    MassM33H = max(M33H)/u.Msun #mass of M33 halo
-    Hern = [] #empty array for Herquist profile masses
-    scaleM33 = 10 #specify scale factor of M33
-    
-    for radius in r: #mass according to hernquist profile at each radiii
-        M33Hern = M33.HernquistMass(radius/u.kpc,scaleM33,MassM33H)
-        Hern.append(M33Hern)
+    MassM33H = .187e12*u.Msun #mass of M33 halo
+    scaleM33 = 25 #specify scale factor of M33
+    Hern = M33.HernquistMass(r/u.kpc,scaleM33,MassM33H) # array for Herquist profile masses
     
     #plot M33 mass profiles on log graphs
     fig,ax = plt.subplots(figsize = (10,10))
@@ -251,8 +235,9 @@ if __name__ == '__main__' :
     ax.semilogy(r,M33T,label = 'Total Profile')
     ax.semilogy(r,Hern,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend=ax.legend() #create legend
-    ax.set(title='M33 Mass Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))')#label graph axes
-    print(f"The best scale length for M33 is: {scaleM33*u.kpc}")
+    ax.set(title='M33 Mass Profiles - Scale fit of 25 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))')#label graph axes
+    #print(f"The best fit scale length for M33 is: {scaleM33*u.kpc}")
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/M33MassProfile.png')
     
     #9 Plot the Rotation Curve for each Galaxy
     
@@ -275,10 +260,7 @@ if __name__ == '__main__' :
     MWDv = MW.CircularVelocity(2,r) #vel. profile of MW Disk
     MWBv = MW.CircularVelocity(3,r) #vel. profile of MW Bulge
     MWTv = MW.CircularVelocityTotal(r) #Total vel. of MW
-    Hernv = [] #empty array for Herquist vel. profile
-    for radius in r: #vel. according to hernquist profile at each radius
-        MWHernv = MW.HernquistVCirc(radius,scaleMW*u.kpc,MassMWH)
-        Hernv.append(MWHernv*u.s/u.km)
+    Hernv =  MW.HernquistVCirc(r,scaleMW*u.kpc,MassMWH) # array for Herquist vel. profile
     
     #plot MW velocity profiles on log graphs
     fig,ax=plt.subplots(figsize = (10,10))
@@ -288,8 +270,9 @@ if __name__ == '__main__' :
     ax.scatter(r,MWTv,label = 'Total Profile')
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend=ax.legend(loc = 8) #create legend
-    ax.set(title='MW Velocity Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
-
+    ax.set(title='MW Velocity Profiles - Scale fit 62 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/MWRotationCurve.png')
+    
     #6. Do the same for M31 and M33.
     
     """M31 Rotation Curve"""
@@ -297,10 +280,7 @@ if __name__ == '__main__' :
     M31Dv = M31.CircularVelocity(2,r) #vel. profile M31 Disk
     M31Bv = M31.CircularVelocity(3,r) #vel. profile M31 Bulge
     M31Tv = M31.CircularVelocityTotal(r) #Total vel. profile for M31
-    Hernv = [] #empty array for Herquist vel. profile
-    for radius in r: #vel. according to hernquist profile at each radius
-        M31Hern = M31.HernquistVCirc(radius,scaleM31*u.kpc,MassM31H)
-        Hernv.append(M31Hern*u.s/u.km)
+    Hernv = M31.HernquistVCirc(r,scaleM31*u.kpc,MassM31H)# array for Herquist vel. profile
     
     #plot M31 velocity profiles on log graphs
     fig,ax = plt.subplots(figsize = (10,10))
@@ -310,23 +290,22 @@ if __name__ == '__main__' :
     ax.scatter(r,M31Tv,label = 'Total Profile')
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend = ax.legend(loc = 8) #create legend and label graph axes
-    ax.set(title = 'M31 Velocity Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
+    ax.set(title = 'M31 Velocity Profiles - Scale fit 62.5 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/M31RotationCurve.png')
     
     """M33 Rotation Curve"""
     #find the velocity profiles of M33 halo and disk
     M33Hv = M33.CircularVelocity(1,r) #vel. profile M33 Halo
     M33Dv = M33.CircularVelocity(2,r) #vel. profile M33 Disk
     M33Tv = M33.CircularVelocityTotal(r) #Total vel. profile
-    Hernv = [] #empty array for Herquist vel. profile
-    for radius in r: #vel. according to hernquist profile at each radius
-        M33Hern = M33.HernquistVCirc(radius,scaleM33*u.kpc,MassM33H)
-        Hernv.append(M33Hern*u.s/u.km)
+    Hernv = M33.HernquistVCirc(r,scaleM33*u.kpc,MassM33H) # array for Herquist vel. profile
     
-    #plot M31 velocity profiles on log graphs
+    #plot M33 velocity profiles on log graphs
     fig,ax = plt.subplots(figsize = (10,10))
     ax.scatter(r,M33Hv,label = 'Halo Profile')
     ax.scatter(r,M33Dv,label = 'Disk Profile')
     ax.scatter(r,M33Tv,label = 'Total Profile')
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend=ax.legend() #create legend
-    ax.set(title = 'M33 Velocity Profiles', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
+    ax.set(title = 'M33 Velocity Profiles - Scale fit 25 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
+    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/M33RotationCurve.png')
