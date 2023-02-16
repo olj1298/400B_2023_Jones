@@ -92,10 +92,10 @@ label_size = 22
 matplotlib.rcParams['xtick.labelsize'] = label_size 
 matplotlib.rcParams['ytick.labelsize'] = label_size
 #add a legend with some customizations.
-legend = ax.legend(loc='upper left',fontsize='x-large')
+legend = ax.legend(loc='upper left',fontsize='large')
 #add figure text
 plt.figtext(0.6, 0.15, 'Isochrone Carina', fontsize=22)
-plt.savefig('IsochroneLab4.png')
+plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneLab4.png')
 
 #Q2
 #Could there be younger ages than suggested in the Tolstoy plot?
