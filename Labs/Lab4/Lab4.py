@@ -101,9 +101,9 @@ plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Labs/Lab4/IsochroneLa
 #Could there be younger ages than suggested in the Tolstoy plot?
 #Try adding younger isochrones to the above plot.
 
-
+#Yes; the plot may not be including pre Main Sequence stars in Carina.
 
 #Q3
 #What do you think might cause the bursts of star formation?
 
-
+#Either from heating due to a galaxy flyby or dying out of an older generation of stars.
