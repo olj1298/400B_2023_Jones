@@ -51,12 +51,13 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
         
         return a_com,b_com,c_com #return the 3 components separately
     
-    def COM_P(self, delta):
+    def COM_P(self, delta,volDec):
         '''Method to compute the position of the center of mass of the galaxy 
         using the shrinking-sphere method.
         Inputs:
             :self(function within class):
             :delta(float): error tolerance in kpc. Default is 0.1 kpc
+            :volDec(float): amount rmax is decreased
         Returns:
             ::p_COM(array of astropy.quantity): 3D position of the center of mass in kpc'''                                                                     
         #Center of Mass Position                                                                                                                                                                      
@@ -75,7 +76,7 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
 
         #find the max 3D distance of all particles from the guessed COM                                               
         #will re-start at half that radius (reduced radius)                                                           
-        r_max = max(r_new)/2.0
+        r_max = max(r_new)/volDec
         
         #pick an initial value for the change in COM position                                                      
         #between the first guess above and the new one computed from half that volume
@@ -108,7 +109,7 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
             #Before loop continues, reset : r_max, particle separations and COM                                        
 
             #reduce the volume by a factor of 2 again                                                                 
-            r_max /= 2.0
+            r_max /= volDec
             #check this.                                                                                              
             #print("maxR", r_max)                                                                                      
 
