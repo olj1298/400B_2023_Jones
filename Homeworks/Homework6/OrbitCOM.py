@@ -1,28 +1,17 @@
-
-
 # Homework 6 Template
 # G. Besla & R. Li
-
-
-
-
-# import modules
+#import modules
 import numpy as np
 import astropy.units as u
 from astropy.constants import G
-
 # import plotting modules
 import matplotlib.pyplot as plt
 import matplotlib
-
 # my modules
 from ReadFile import Read
 # Step 1: modify CenterOfMass so that COM_P now takes a parameter specifying 
 # by how much to decrease RMAX instead of a factor of 2
-from CenterOfMass2 import CenterOfMass
-
-
-
+from CenterOfMass import CenterOfMass
 
 def 
     """function that loops over all the desired snapshots to compute the COM pos and vel as a function of time.
