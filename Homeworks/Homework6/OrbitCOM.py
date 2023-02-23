@@ -7,6 +7,7 @@ from astropy.constants import G
 import matplotlib.pyplot as plt # import plotting modules
 import matplotlib
 import sys
+import os
 from ReadFile import Read #my modules
 from CenterOfMass import CenterOfMass
 #Step 1: modify CenterOfMass so that COM_P now takes a parameter specifying by how much to decrease RMAX instead of a factor of 2
@@ -21,7 +22,8 @@ def OrbitCOM(galaxy,start,end,n):
         Returns: 
             ::save orbits output as file"""
 
-    fileout = 'Orbit_'+galaxy+'_'+str(start)+'_'+str(end)+'.txt' #savefile for orbit calculated
+    fileout = 'C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/'+'Orbit_'+galaxy+'_'+str(start)+'_'+str(end)+'.txt' #savefile for orbit calculated
+    #print(f"fileout: {fileout}")
     delta = 0.1 #tolerance
     volDec = 2 #amount rmax is decreased in CenterOfMass function
     snapids = np.arange(start,end+1,n) #create array
@@ -36,25 +38,26 @@ def OrbitCOM(galaxy,start,end,n):
         
         ilbl = '000'+str(snapid)
         ilbl = ilbl[-3:] #keep last 3 digits
-        filename = 'C/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6'+galaxy+'_'+str(ilbl)+'.txt' #save to directory address
-        COM = CenterOfMass(filename, 2) #Instance of CenterOfMass with 2 = disk particles
+        filename = 'C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/'+(galaxy)+'_'+str(ilbl)+'.txt' #save to directory address
+        #print(f"filename is: {filename}")
+        COM = CenterOfMass(filename,2) #Instance of CenterOfMass with 2 = disk particles
 
         if galaxy == 'M33': #condition for M33
             volDec = 4 #M33 tidally stripped towards end of simulation
             COM_p = COM.COM_P(delta,volDec)
-            COM_v= COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
+            COM_v = COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
         else:
             COM_p = COM.COM_P(delta,volDec)
-            COM_v= COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
+            COM_v = COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
             
-        time = COM.time / 1000 #time, pos, vel in ith element of the orbit array, without units 
-        orbit[i][0] =time.value
-        orbit[i][1] =COM_p[0].value
-        orbit[i][2] =COM_p[1].value
-        orbit[i][3] =COM_p[2].value
-        orbit[i][4] =COM_v[0].value
-        orbit[i][5] =COM_v[1].value
-        orbit[i][6] =COM_v[2].value
+        time = COM.time/1000 #time, pos, vel in ith element of the orbit array, without units 
+        orbit[i][0] = time.value
+        orbit[i][1] = COM_p[0].value
+        orbit[i][2] = COM_p[1].value
+        orbit[i][3] = COM_p[2].value
+        orbit[i][4] = COM_v[0].value
+        orbit[i][5] = COM_v[1].value
+        orbit[i][6] = COM_v[2].value
         
         print(snapid) #test
         
@@ -68,16 +71,16 @@ def OrbitCOM(galaxy,start,end,n):
 
 #Recover the orbits and generate the COM files for each galaxy read in 800 snapshots in intervals of n=5
 #Note: This might take a little while - test your code with a smaller number of snapshots first!
-OrbitCOM('MW', 0, 800, 5)
-OrbitCOM('M31', 0, 800, 5)
-OrbitCOM('M33', 0, 800, 5)
+OrbitCOM('MW',0,800,5)
+OrbitCOM('M31',0,800,5)
+OrbitCOM('M33',0,800,5)
 #Read in the data files for the orbits of each galaxy that you just created
 #headers: t, x, y, z, vx, vy, vz
 #using np.genfromtxt
 
-dataMW = np.genfromtxt("Orbit_MW_0_800.txt", dtype=None, names=True, skip_header=0)
-dataM31 = np.genfromtxt("Orbit_M31_0_800.txt", dtype=None, names=True, skip_header=0)
-dataM33 = np.genfromtxt("Orbit_M33_0_800.txt", dtype=None, names=True, skip_header=0)
+dataMW = np.genfromtxt(os.path.abspath("Orbit_MW_0_800.txt"),dtype=None,names=True,skip_header=0)
+dataM31 = np.genfromtxt(os.path.abspath("Orbit_M31_0_800.txt"),dtype=None,names=True,skip_header=0)
+dataM33 = np.genfromtxt(os.path.abspath("Orbit_M33_0_800.txt"),dtype=None,names=True,skip_header=0)
 
 #function to compute the magnitude of the difference between two vectors 
 #You can use this function to return both the relative position and relative velocity for two 
@@ -175,9 +178,8 @@ plt.title('Relative Velocity of MW-M31')
 plt.legend()
 plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/VeloofMWandM31')
 
-"""Questions 1) There will be 2 close encounters between MW and M33 before they merger in the third encounter.
-    2) As the galaxies get closer, the velocity increases. Essentially, velocity appears inversely related to
-    separation.
-    3) MW and M31 fully merge just after 6 Gyr from now.
-    bonus) M33 appears to be decaying by ~ 10 kpc / Gyr just after 6 Gyr. If this continued, it would take ~7.5 Gyrs for M33 to 
-    then merge with the MW-M31 remnant."""
+"""Questions 1)Two encounters before they merge.
+    2)When the galaxies approach each other, the velocity increases. 
+    3)M31 and MW around 6 Gyr from now.
+    bonus)M33 orbit decays by 10 kpc/Gyr at 6 Gyr. If constant, it would take 7.5 Gyr for M33 to 
+    merge with the combined MW and M31."""

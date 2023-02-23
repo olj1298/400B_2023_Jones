@@ -25,12 +25,6 @@ def Read(filename):
     return time,total,data #give time, total, data values when asked
 
 #Read('MW_000.txt')
-
-def main():
-#define the file path to be used to open the file
-    filename=Path('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/MW_000.txt')
-    
-    #call Read function to produce a numpy array of the data within the file
-    Read(filename)
-    
-main()
+if __name__ == "__main__":
+    time, total, data = Read("MW_000.txt")
+    print(data)

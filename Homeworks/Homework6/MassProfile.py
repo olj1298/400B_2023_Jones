@@ -21,7 +21,7 @@ class MassProfile:
         ilbl = '000' + str(snap) #add a string of the filenumber to the value “000”
         #remove all but the last 3 digits
         ilbl = ilbl[-3:]
-        self.filename = 'C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework5/' + '%s_'%(galaxy)+ilbl+'.txt'
+        self.filename = 'C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/' + '%s_'%(galaxy)+ilbl+'.txt'
         #print(self.filename)
         #read data in the given file using Read
         self.time, self.total, self.data = Read(self.filename)                                                                                      

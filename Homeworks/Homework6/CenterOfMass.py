@@ -51,7 +51,7 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
         
         return a_com,b_com,c_com #return the 3 components separately
     
-    def COM_P(self, delta,volDec):
+    def COM_P(self,delta,volDec):
         '''Method to compute the position of the center of mass of the galaxy 
         using the shrinking-sphere method.
         Inputs:
@@ -177,67 +177,3 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
         v_COM = np.round(v_COM,2)*u.km/u.s
         
         return v_COM
-
-if __name__ == '__main__' : 
-
-    #Create a Center of mass object for the MW, M31 and M33
-    #below is an example of using the class for MW
-    #directory address for Galaxy files
-    MWfile = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework4/MW_000.txt"
-    M31file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework4/M31_000.txt"
-    M33file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework4/M33_000.txt"
-    #call and round galaxy mass particle data
-    MW_COM = CenterOfMass(MWfile, 2)
-    M31_COM = CenterOfMass(M31file, 2)
-    M33_COM = CenterOfMass(M33file, 2)
-    #below gives you an example of calling the class's functions
-    #MW:store the position and velocity COM
-    MW_COM_p = MW_COM.COM_P(0.1)
-    MW_pmag = np.sqrt(np.sum(np.square(MW_COM_p)))
-    print(f"MW COM position components: {MW_COM_p}")
-    print(f"MW COM position mag.: {np.round(MW_pmag,2)}")
-    MW_COM_v = MW_COM.COM_V(MW_COM_p[0], MW_COM_p[1], MW_COM_p[2])
-    print(f"MW COM vel. components: {MW_COM_v}")
-    MW_vmag = np.sqrt(np.sum(np.square(MW_COM_v)))
-    print(f"MW COM vel. magnitude: {np.round(MW_vmag,2)}")
-    
-    #M31:store the position and velocity COM
-    M31_COM_p = M31_COM.COM_P(0.1)
-    M31_pmag = np.sqrt(np.sum(np.square(M31_COM_p)))
-    print(f"M31 COM position components: {M31_COM_p}")
-    print(f"M31 COM position mag.:{np.round(M31_pmag,2)}")
-    M31_COM_v = M31_COM.COM_V(M31_COM_p[0], M31_COM_p[1], M31_COM_p[2])
-    print(f"M31 COM vel. components: {M31_COM_v}")
-    M31_vmag = np.sqrt(np.sum(np.square(M31_COM_v)))
-    print(f"M31 COM vel. magnitude: {np.round(M31_vmag,2)}")
-    
-    #M33:store the position and velocity COM
-    M33_COM_p = M33_COM.COM_P(0.1)
-    M33_pmag = np.sqrt(np.sum(np.square(M33_COM_p)))
-    print(f"M33 COM position components: {M33_COM_p}")
-    print(f"M33 COM position mag.: {np.round(M33_pmag,2)}")
-    M33_COM_v = M33_COM.COM_V(M33_COM_p[0], M33_COM_p[1], M33_COM_p[2])
-    print(f"M33 COM vel. components: {M33_COM_v}")
-    M33_vmag = np.sqrt(np.sum(np.square(M33_COM_v)))
-    print(f"M33 COM vel. magnitude: {np.round(M33_vmag,2)}")
-    
-    #separation between MW and M31
-    p_sep = MW_COM_p - M31_COM_p
-    v_sep = MW_COM_v - M31_COM_v
-    #magnitude of separation
-    p_mag = np.sqrt(np.sum(np.square(p_sep)))
-    v_mag = np.sqrt(np.sum(np.square(v_sep)))
-    print(f"MW and M31 separation: {np.round(p_mag, 3)}")
-    print(f"MW and M31 vel. difference: {np.round(v_mag, 3)}")
-    #separation between M33 and M31
-    p_sep2 = M33_COM_p - M31_COM_p
-    v_sep2 = M33_COM_v - M31_COM_v
-    #magnitude of separation
-    p_mag2 = np.sqrt(np.sum(np.square(p_sep2)))
-    v_mag2 = np.sqrt(np.sum(np.square(v_sep2)))
-    print(f"M33 and M31 separation: {np.round(p_mag2, 3)}")
-    print(f"M33 and M31 vel. difference: {np.round(v_mag2, 3)}")
-
-    #Q4
-    print(f"The iterative process was important because the position of the galaxies are moving closer together.")
-    print(f"As the galaxies move closer together, the center of mass will change over time as well.")

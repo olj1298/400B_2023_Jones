@@ -11,12 +11,12 @@ import matplotlib.pyplot as plt
 class MassProfile:
 
     def __init__(self, galaxy, snap):
-        '''In this assignment you will determine the mass distribution of each galaxy at SnapNumber
+        """In this assignment you will determine the mass distribution of each galaxy at SnapNumber
         and use this to determine each galaxy's rotation curve. 
             Inputs:
             :self(function within class):
             :galaxy(string): Galaxy Name such as MW, M31 and M33
-            :snap(integer): Snapshot number 1, 2, etc.'''
+            :snap(integer): Snapshot number 1, 2, etc"""
         
         ilbl = '000' + str(snap) #add a string of the filenumber to the value “000”
         #remove all but the last 3 digits
