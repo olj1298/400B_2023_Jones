@@ -43,10 +43,13 @@ def OrbitCOM(galaxy,start,end,n):
         COM = CenterOfMass(filename,2) #Instance of CenterOfMass with 2 = disk particles
 
         if galaxy == 'M33': #condition for M33
+            delta = 0.1
             volDec = 4 #M33 tidally stripped towards end of simulation
             COM_p = COM.COM_P(delta,volDec)
             COM_v = COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
         else:
+            delta = 0.1
+            volDec = 2
             COM_p = COM.COM_P(delta,volDec)
             COM_v = COM.COM_V(COM_p[0], COM_p[1], COM_p[2])
             
