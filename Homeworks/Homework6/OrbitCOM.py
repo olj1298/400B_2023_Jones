@@ -62,7 +62,7 @@ def OrbitCOM(galaxy,start,end,n):
         orbit[i][5] = COM_v[1].value
         orbit[i][6] = COM_v[2].value
         
-        print(snapid) #test
+        print(snapid) #see progress of loop
         
     #write the data to a file
     #we do this because we don't want to have to repeat this process 
@@ -70,7 +70,6 @@ def OrbitCOM(galaxy,start,end,n):
     np.savetxt(fileout, orbit, fmt = "%11.3f"*7, comments='#',
                header="{:>10s}{:>11s}{:>11s}{:>11s}{:>11s}{:>11s}{:>11s}"\
                       .format('t', 'x', 'y', 'z', 'vx', 'vy', 'vz'))
-    #return
 
 #Recover the orbits and generate the COM files for each galaxy read in 800 snapshots in intervals of n=5
 #Note: This might take a little while - test your code with a smaller number of snapshots first!
@@ -158,7 +157,7 @@ plt.title('Orbit of M31-M33')
 plt.legend()
 plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/OrbitofM31andM33')
 
-plt.plot(dataMW['t'],differencepositionsMWM31,color='red',linewidth=2,label='MW-M31')
+plt.plot(dataMW['t'],differencepositionsMWM31,color='blue',linewidth=2,label='MW-M31')
 plt.xlabel('time (Gyr)')
 plt.ylabel('Distance (Kpc)')
 plt.title('Orbit of MW-M31')
@@ -167,14 +166,14 @@ plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/O
  
 #Plot the orbital velocities of the galaxies 
 
-plt.plot(dataMW['t'],differencevelosM33M31,color='red',linewidth=2,label='M33-M31')
+plt.plot(dataMW['t'],differencevelosM33M31,color='green',linewidth=2,label='M33-M31')
 plt.xlabel('time (Gyr)')
 plt.ylabel('Velocity (km/s)')
 plt.title('Relative Velocity of M31-M33')
 plt.legend()
 plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/VeloofM31andM33')
 
-plt.plot(dataMW['t'],differencevelosMWM31,color='red',linewidth=2,label='MW-M31')
+plt.plot(dataMW['t'],differencevelosMWM31,color='black',linewidth=2,label='MW-M31')
 plt.xlabel('time (Gyr)')
 plt.ylabel('Velocity (km/s)')
 plt.title('Relative Velocity of MW-M31')

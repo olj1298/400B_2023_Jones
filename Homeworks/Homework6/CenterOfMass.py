@@ -115,9 +115,9 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
 
             #Change the frame of reference to the newly computed COM.                                                 
             #subtract the new COM
-            x_new = x2 - x_COM2 #diff in x position
-            y_new = y2 - y_COM2 #diff in y position
-            z_new = z2 - z_COM2 #diff in z position
+            x_new = self.x - x_COM2 #diff in x position
+            y_new = self.y - y_COM2 #diff in y position
+            z_new = self.z - z_COM2 #diff in z position
             r_new = np.sqrt(x_new**2+y_new**2+z_new**2) #magnitude of position vector
 
             #set the center of mass positions to the refined values                                                   
