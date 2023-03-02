@@ -1,10 +1,6 @@
-
-
 # Homework 4
 # Center of Mass Position and Velocity
 #  Solutions: G. Besla, R. Li, H. Foote
-
-
 
 # import modules
 import numpy as np
@@ -12,7 +8,8 @@ import astropy.units as u
 import astropy.table as tbl
 
 from ReadFile import Read
-
+import sys
+import os
 
 class CenterOfMass:
 # Class to define COM position and velocity properties of a given galaxy 
@@ -253,9 +250,9 @@ if __name__ == '__main__' :
 
 
     # Create  a Center of mass object for the MW, M31 and M33                                                              
-    MW_COM = CenterOfMass("MW_000.txt", 2)
-    M31_COM = CenterOfMass("M31_000.txt", 2)
-    M33_COM = CenterOfMass("M33_000.txt", 2)
+    MW_COM = CenterOfMass(os.path.abspath("MW_000.txt"), 2)
+    M31_COM = CenterOfMass(os.path.abspath("M31_000.txt"), 2)
+    M33_COM = CenterOfMass(os.path.abspath("M33_000.txt"), 2)
 
     # find and print the COM positions in phase-space for each galaxy
 

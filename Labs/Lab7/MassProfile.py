@@ -16,7 +16,8 @@ import matplotlib
 # my modules from previous homeworks
 from ReadFile import Read
 from CenterOfMass import CenterOfMass
-
+import sys
+import os
 
 
 class MassProfile:
@@ -295,7 +296,7 @@ def mEncPlot(galaxy, snap, plot_name, a):
       #with a three-digit snap number
     filename='%s_'%(galaxy) + ilbl + '.txt'
         
-    M_halo_tot = ComponentMass(filename, 1) * 1e12 * u.Msun 
+    M_halo_tot = ComponentMass(os.path.abspath(filename), 1) * 1e12 * u.Msun 
         # halo mass in Msun
 
     # radius array in kpc
@@ -354,7 +355,7 @@ def vCircPlot(galaxy, snap, plot_name, a):
         #up with a three-digit snap number
     filename='%s_'%(galaxy) + ilbl + '.txt'
 
-    M_halo_tot = ComponentMass(filename, 1) * 1e12 * u.Msun 
+    M_halo_tot = ComponentMass(os.path.abspath(filename), 1) * 1e12 * u.Msun 
     # halo mass in Msun
 
     # radius array in kpc
@@ -428,7 +429,7 @@ if __name__ == '__main__':
     # scale radius to test
     ScaleMW = 61
     # total Halo Mass from M31
-    MtotMW = ComponentMass("MW_000.txt",1)*u.Msun*1e12
+    MtotMW = ComponentMass(os.path.abspath("MW_000.txt"),1)*u.Msun*1e12
     # Mass enclosed from simulation
     MtestMW = MW.massEnclosed(1,testR)
 
@@ -462,7 +463,7 @@ if __name__ == '__main__':
     # scale radius to test
     ScaleM31 = 62
     # total Halo Mass of M31 from Assignment 3
-    MtotM31 = ComponentMass("M31_000.txt",1)*u.Msun*1e12
+    MtotM31 = ComponentMass(os.path.abspath("M31_000.txt"),1)*u.Msun*1e12
 
 
     # Mass enclosed from simulation
@@ -496,7 +497,7 @@ if __name__ == '__main__':
     # scale radius to test
     ScaleM33 = 25
     # total Halo Mass of M33 from Assignment 3
-    MtotM33 = ComponentMass("M33_000.txt",1)*u.Msun*1e12
+    MtotM33 = ComponentMass(os.path.abspath("M33_000.txt"),1)*u.Msun*1e12
 
 
     # Mass enclosed from simulation

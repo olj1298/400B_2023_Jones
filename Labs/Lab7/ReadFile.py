@@ -5,7 +5,8 @@
 # Load Modules
 import numpy as np
 import astropy.units as u
-
+import sys
+import os
 
 def Read(filename):
     """ Function to read in our data file
@@ -28,7 +29,7 @@ def Read(filename):
     
     
     # open the file 
-    file = open(filename,'r')
+    file = open(os.path.abspath(filename),'r')
     
     #read header info line by line (line will be a string)
     # read first two lines FIRST and store as variable
@@ -53,7 +54,7 @@ def Read(filename):
     # the flag "names=True" creates arrays to store the date
     #       with the column headers given in line 4 like "m", "x"
     
-    data = np.genfromtxt(filename,dtype=None,names=True,skip_header=3)
+    data = np.genfromtxt(os.path.abspath(filename),dtype=None,names=True,skip_header=3)
     
     # Note, another option is loadtxt, skipping the first 3 rows.  
     # data = np.loadtxt(filename,skiprows=3)
