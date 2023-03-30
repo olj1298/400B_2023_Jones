@@ -74,8 +74,8 @@ class SolarParticles: #Class to define COM position and velocity properties of a
             velocity = np.linalg.norm(calcv - velvec)
             #Add to empty array particles that are needed for this project
             #Using radius from galactic center defined in (Reid 2014 ApJ 783), (Abuter+2019 A&A 625), Sparke & Gallagher
-            #using velocity from 
-            if 7.9 < radius < 9.178 and 220 < velocity < 250:
+            #using velocity (from Marel+2012)
+            if 7.9 < radius < 9.178 and 239 < velocity < 250:
                 solar.append(i) #add each fitting particle to empty array
                 posintrest = np.array([self.x,self.y,self.z])
                 sep = np.array([]) #empty array for radius
@@ -91,17 +91,15 @@ class SolarParticles: #Class to define COM position and velocity properties of a
 if __name__ == '__main__' :
     M31solar = SolarParticles(0,2)
     Sol = M31solar.solarselector()
-    #Plot frequency histogram of final distance and relative velocity
-    #Relative velocity needs to be magnitude and radial
+    #Plot frequency histogram of number of particles at solar radius
     fig, ax = plt.subplots()
-    ax.hist(Sol, bins=100, range=(0,10),edgecolor='black')#,color='magenta')
+    ax.hist(Sol, bins=100, range=(0,10))#,edgecolor='black',color='magenta')
     ax.set(title = 'Amount of Solarlike particles', xlabel = 'radius (kpc)', ylabel = 'frequency') #label graph axes
     plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/ResearchAssignments/ResearchAssignment3/M31.png')
     
     M31solar = SolarParticles(800,2)
     Sol800 = M31solar.solarselector()
-    #Plot frequency histogram of final distance and relative velocity
-    #Relative velocity needs to be magnitude and radial
+    #Plot frequency histogram of number of particles at solar radius in 12 Gyr
     fig, ax = plt.subplots()
     ax.hist(Sol800, bins=100, range=(0,10),edgecolor='black') #,color='magenta')
     ax.set(title = 'Amount of Solarlike particles', xlabel = 'radius (kpc)', ylabel = 'frequency') #label graph axes
