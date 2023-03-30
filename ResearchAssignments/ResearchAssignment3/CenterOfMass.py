@@ -10,11 +10,11 @@ from ReadFile import Read
 class CenterOfMass: #Class to define COM position and velocity properties of a given galaxy #and simulation snapshot
 
     def __init__(self, filename, ptype):
-        '''Class to calculate the 6-D phase-space position of a galaxy's center of mass using
+        """Class to calculate the 6-D phase-space position of a galaxy's center of mass using
         a specified particle type. 
             Inputs:
             :filename(string): snapshot file
-            :ptype(integer): 1, 2, or 3. particle type to use for COM calculations'''
+            :ptype(integer): 1, 2, or 3. particle type to use for COM calculations"""
         
         self.time, self.total, self.data = Read(filename) #read data in the given file using Read                                                                                     
         #create an array to store indexes of particles of desired Ptype                                
@@ -51,13 +51,12 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
         
         return a_com,b_com,c_com #return the 3 components separately
     
-    def COM_P(self,delta,volDec):
+    def COM_P(self,delta):
         '''Method to compute the position of the center of mass of the galaxy 
         using the shrinking-sphere method.
         Inputs:
             :self(function within class):
             :delta(float): error tolerance in kpc. Default is 0.1 kpc
-            :volDec(float): amount rmax is decreased
         Returns:
             ::p_COM(array of astropy.quantity): 3D position of the center of mass in kpc'''                                                                     
         #Center of Mass Position                                                                                                                                                                      
@@ -76,7 +75,7 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
 
         #find the max 3D distance of all particles from the guessed COM                                               
         #will re-start at half that radius (reduced radius)                                                           
-        r_max = max(r_new)/volDec
+        r_max = max(r_new)/2
         
         #pick an initial value for the change in COM position                                                      
         #between the first guess above and the new one computed from half that volume
@@ -109,7 +108,7 @@ class CenterOfMass: #Class to define COM position and velocity properties of a g
             #Before loop continues, reset : r_max, particle separations and COM                                        
 
             #reduce the volume by a factor of 2 again                                                                 
-            r_max /= volDec
+            r_max /= 2
             #check this.                                                                                              
             #print("maxR", r_max)                                                                                      
 

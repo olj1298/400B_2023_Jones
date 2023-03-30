@@ -32,7 +32,7 @@ class MassProfile:
         self.z = self.data['z']*u.kpc #data in z column from file.  
         self.gname = galaxy #galaxy name
     
-    def MassEnclosed(self, ptype,rarray):
+    def MassEnclosed(self,ptype,rarray):
         """Computes the mass enclosed within a given radius of the COM position for a specified galaxy and a 
         specified component of that galaxy. Calculate the enclosed masses for an array of radii and returns an array
         of masses in Msun. 
