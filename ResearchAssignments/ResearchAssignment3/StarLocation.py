@@ -6,9 +6,9 @@ we can extend this to similar particles that exist in M31. I hope to come to a c
 sun like particles. I plan to plot circular velocity vs. radius from galactic center."""
 
 #select galactic center of M31
-#selecting particles with similar radius as sun in MW (8.2kpc)
-#selecting particles with similar velocity as sun in MW (250km/s)
-#what snapshots used (From HW6:For this assignment you will compute the orbits up to Snapshot 800 (∼12 Gyr).)
+#selecting particles with similar radius as sun in MW (~8.2kpc)
+#selecting particles with similar velocity as sun in MW (~250km/s)
+#what snapshots used (Snapshot 800 (∼12 Gyr))
 #follow particles over time
 #when will stop simulation and relevant to which center
 
@@ -63,14 +63,14 @@ class SolarParticles: #Class to define COM position and velocity properties of a
         pvec = COM.COM_P(0.1) #define Center of Mass object for COM Position of object at snapshot given
         velvec = COM.COM_V(pvec[0],pvec[1], pvec[2]).value #define the x, y, and z of velocity vector
         valpvec = pvec.value #adding units to position vector
-        solar = [] #empty array
+        solar = np.array([]) #empty array
         #go through all particles of type specified
         for i in range(len(self.x)):
             #position and Velocity Vectors
             calcp = np.array([self.x[i], self.y[i], self.z[i]])
             calcv = np.array([self.vx[i], self.vy[i], self.vz[i]])
             #difference of COM to the particles radius and velocity
-            radius = np.linalg.norm(calcp - valpvec)
+            radius = np.linalg.norm(calcp - valpvec) #do this as xyz component, move up to compute before
             velocity = np.linalg.norm(calcv - velvec)
             #Add to empty array particles that are needed for this project
             #Using radius from galactic center defined in (Reid 2014 ApJ 783), (Abuter+2019 A&A 625), Sparke & Gallagher
@@ -85,10 +85,13 @@ class SolarParticles: #Class to define COM position and velocity properties of a
                     rv = np.array([self.vx[i],self.vy[i],self.vz[i]]) - velvec #take differnce in velocity
                     sep = np.append(sep, np.linalg.norm(r)) #normalize radius
                     newvrel = np.append(vrel, np.linalg.norm(rv)) #normalize velocity
-                
+            #np.where(index) range
+            #track particle by spitting out row indices and return r position for same index at snapshot 800    
+            #use lab 7 to rotate and get M31 in xyz plane and ring shape so limit on z
         return solar,sep #Return list of all indices with solar properties.
             
 if __name__ == '__main__' :
+    #plot where partcle location over time in space
     M31solar = SolarParticles(0,2)
     Sol = M31solar.solarselector()
     #Plot frequency histogram of number of particles at solar radius
