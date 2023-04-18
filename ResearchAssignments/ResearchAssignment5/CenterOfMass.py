@@ -1,4 +1,3 @@
-#Homework 4
 #Center of Mass Position and Velocity
 #Solutions: G.Besla, R. Li, H. Foote
 #olivia jones 2.9.23
