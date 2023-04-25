@@ -4,7 +4,7 @@ import numpy as np
 import astropy.units as u
 import astropy.constants as const
 from ReadFile import Read #bring in readfile.py
-from CenterOfMass import CenterOfMass #bring in previous class
+from CenterOfMass2 import CenterOfMass #bring in previous class
 import matplotlib.pyplot as plt
 
 #In this assignment you will determine the mass distribution of each galaxy at SnapNumber and use this to determine each galaxy’s rotation curve.
@@ -59,7 +59,7 @@ class MassProfile:
         menc=np.zeros(np.size(rarray)) #array of zeros for mass values
 
         for i in range(np.size(rarray)): #for radius in array of radii
-            rindex = np.where(r_new < rarray[i]) #get particles inside radius
+            rindex = np.where(r_new < rarray[i]*u.kpc) #get particles inside radius
             minr = m_new[rindex] #get mass of particles in radius
             menc[i]=np.sum(minr) #sum mass of all particles in radius
         
@@ -193,7 +193,7 @@ if __name__ == '__main__' :
     legend = ax.legend() #create legend
     ax.set(title = 'MW Mass Profiles - Scale fit 62 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
     #print(f"The best fit scale length for the MW is: {scaleMW*u.kpc}")
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/MWMassProfile.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/MWMassProfile.png')
     
     #8. Repeat for M33 and M31.
     
@@ -217,7 +217,7 @@ if __name__ == '__main__' :
     legend=ax.legend() #create legend
     ax.set(title = 'M31 Mass Profiles - Scale fit of 62.5 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))') #label graph axes
     #print(f"The best fit scale length for M31 is: {scaleM31*u.kpc}")
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6M31MassProfile.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6M31MassProfile.png')
     
     """M33"""
     M33 = MassProfile('M33',0) #COM object for M33
@@ -237,7 +237,7 @@ if __name__ == '__main__' :
     legend=ax.legend() #create legend
     ax.set(title='M33 Mass Profiles - Scale fit of 25 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Mass Enclosed ($M_{\odot}$))')#label graph axes
     #print(f"The best fit scale length for M33 is: {scaleM33*u.kpc}")
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M33MassProfile.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M33MassProfile.png')
     
     #9 Plot the Rotation Curve for each Galaxy
     
@@ -271,7 +271,7 @@ if __name__ == '__main__' :
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend=ax.legend(loc = 8) #create legend
     ax.set(title='MW Velocity Profiles - Scale fit 62 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/MWRotationCurve.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/MWRotationCurve.png')
     
     #6. Do the same for M31 and M33.
     
@@ -291,7 +291,7 @@ if __name__ == '__main__' :
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend = ax.legend(loc = 8) #create legend and label graph axes
     ax.set(title = 'M31 Velocity Profiles - Scale fit 62.5 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M31RotationCurve.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M31RotationCurve.png')
     
     """M33 Rotation Curve"""
     #find the velocity profiles of M33 halo and disk
@@ -308,4 +308,4 @@ if __name__ == '__main__' :
     ax.plot(r,Hernv,linestyle = 'dashed',label = 'Hernquist Profile',color = 'red')
     legend=ax.legend() #create legend
     ax.set(title = 'M33 Velocity Profiles - Scale fit 25 kpc', xlabel = 'Radius (kpc)', ylabel = 'Log(Velocity ($ms^{-1}$))') #label graph axes
-    plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M33RotationCurve.png')
+    #plt.savefig('C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework6/M33RotationCurve.png')
