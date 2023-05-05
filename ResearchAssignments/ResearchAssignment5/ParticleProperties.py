@@ -30,6 +30,7 @@ def ParticleInfo(filename,parttype,partno):
     print(f'Mass is {partmass}') #mass of particle specified by user
     print(f'Mass is also {np.round(distmag.to(u.lyr),3)}') #convert kpc to lightyr
     return distmag,velmag,partmass
+
 #directory address for file we are reading
 filename = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework2/MW_000.txt"
 ParticleInfo(filename,2,99) #get info for 100th disk star particle

@@ -20,44 +20,44 @@ def ComponentMass(filename,parttype):
     return masssum/100 #totalmass
 
 #directory for file to read
-MWfile = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework2/MW_000.txt"
-M31file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework3/M31_000.txt"
-M33file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/Homeworks/Homework3/M33_000.txt"
+MWfile = "C:/Users/orang/Downloads/400b/400B_2023_Jones/ResearchAssignments/ResearchAssignment5/MW_000.txt"
+M31file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/ResearchAssignments/ResearchAssignment5/M31_000.txt"
+M33file = "C:/Users/orang/Downloads/400b/400B_2023_Jones/ResearchAssignments/ResearchAssignment5/M33_000.txt"
 
 totmassMW1 = ComponentMass(MWfile,1) #Mass of all Halo particles in Milky Way
-print(f'Mass of halo particles in Milky Way is {totmassMW1:.2e}') #round answer to two places
+#print(f'Mass of halo particles in Milky Way is {totmassMW1:.2e}') #round answer to two places
 totmassMW2 = ComponentMass(MWfile,2) #Mass of all disk particles in Milky Way   
-print(f'Mass of disk particles in Milky Way is {totmassMW2:.2e}') #round answer to two places
+#print(f'Mass of disk particles in Milky Way is {totmassMW2:.2e}') #round answer to two places
 totmassMW3 = ComponentMass(MWfile,3) #Mass of all Buldge particlces in Milky Way
-print(f'Mass of buldge particles in Milky Way is {totmassMW3:.2e}') #round answer to two places
+#print(f'Mass of buldge particles in Milky Way is {totmassMW3:.2e}') #round answer to two places
 totmassMW = totmassMW1+totmassMW2+totmassMW3 #sum of all particle types
-print(f'Total mass of the Milky Way is {totmassMW:.2e}') #round answer to two places
+#print(f'Total mass of the Milky Way is {totmassMW:.2e}') #round answer to two places
 fbarMW = (totmassMW2+totmassMW3)/totmassMW #fbar is ((disk + buldge) particles mass/totalmass of all particles)
-print(f'f_bar of M33 is {fbarMW:.3E}') #round answer to two places
+#print(f'f_bar of M33 is {fbarMW:.3E}') #round answer to two places
 
 totmassM311 = ComponentMass(M31file,1)#Mass of all Halo particles in M31
-print(f'Mass of halo particles in M31 is {totmassM311:.2e}') #round answer to two places
+#print(f'Mass of halo particles in M31 is {totmassM311:.2e}') #round answer to two places
 totmassM312 = ComponentMass(M31file,2)#Mass of all Disk particles in M31
-print(f'Mass of disk particles in M31 is {totmassM312:.2e}') #round answer to two places
+#print(f'Mass of disk particles in M31 is {totmassM312:.2e}') #round answer to two places
 totmassM313 = ComponentMass(M31file,3)#Mass of all Buldge particlces in M31
-print(f'Mass of buldge particles in M31 is {totmassM313:.2e}') #round answer to two places
+#print(f'Mass of buldge particles in M31 is {totmassM313:.2e}') #round answer to two places
 totmassM31 = totmassM311+totmassM312+totmassM313 #sum of all particle types
-print(f'Total mass of the M31 is {totmassM31:.3E}') #round answer to two places
+#print(f'Total mass of the M31 is {totmassM31:.3E}') #round answer to two places
 fbarM31 = (totmassM312+totmassM313)/totmassM31 #fbar is ((disk + buldge) particles mass/totalmass of all particles)
-print(f'f_bar of M33 is {fbarM31:.3E}') #round answer to two places
+#print(f'f_bar of M33 is {fbarM31:.3E}') #round answer to two places
 
 totmassM331 = ComponentMass(M33file,1)#Mass of all Halo particles in M33
-print(f'Mass of halo particles in M33 is {totmassM331:.2e}') #round answer to two places
+#print(f'Mass of halo particles in M33 is {totmassM331:.2e}') #round answer to two places
 totmassM332 = ComponentMass(M33file,2)#Mass of all Disk particles in M33  
-print(f'Mass of disk particles in M33 is {totmassM332:.2e}') #round answer to two places
-print(f'Mass of buldge particles in M33 is zero since no buldge particles.')
+#print(f'Mass of disk particles in M33 is {totmassM332:.2e}') #round answer to two places
+#print(f'Mass of buldge particles in M33 is zero since no buldge particles.')
 totmassM33 = totmassM331+totmassM332 #sum of all particle types
-print(f'Total mass of the M33 is {totmassM33:.2e}') #round answer to three places
+#print(f'Total mass of the M33 is {totmassM33:.2e}') #round answer to three places
 fbarM33 = totmassM332/totmassM33 #fbar is (disk particles mass/totalmass of all particles)
-print(f'f_bar of M33 is {fbarM33:.3E}') #round answer to two places
+#print(f'f_bar of M33 is {fbarM33:.3E}') #round answer to two places
 
 localmass = totmassMW+totmassM31+totmassM33 #sum of particles in each galaxy in group
-print(f'Mass of Local Group is {localmass:.2e}') #round answer to two places
+#print(f'Mass of Local Group is {localmass:.2e}') #round answer to two places
 
 #assign data
 mydata =[["Milky Way", np.round(totmassMW1/10e12,3), np.round(totmassMW2/10e12,3), np.round(totmassMW3/10e12,3), 
@@ -73,4 +73,4 @@ head = ["Galaxy Name", "Halo Mass (10e12 M_sun)", "Disk Mass (10e12 M_sun)",
         "Buldge Mass (10e12 M_sun)", "Total (10e12 M_sun)", "fbar"]
 
 #display table
-print(tabulate(mydata, headers=head, tablefmt="grid"))
+#print(tabulate(mydata, headers=head, tablefmt="grid"))
